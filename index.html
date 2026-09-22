@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Portfolio de Roll-d20: diseño y desarrollo web." />
+    <title>Roll-d20 — Portfolio</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+      :root {
+        --ink: #202422;
+        --paper: #f2ebd9;
+        --red: #c7442e;
+        --yellow: #e9b942;
+        --green: #507a62;
+        --line: 2px solid var(--ink);
+        --shadow: 5px 5px 0 var(--ink);
+      }
+
+      * { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background-color: var(--paper);
+        background-image: radial-gradient(#d5cdb9 0.7px, transparent 0.7px);
+        background-size: 6px 6px;
+        font-family: "Space Grotesk", Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.45;
+      }
+
+      a { color: inherit; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+      a:hover { color: var(--red); }
+
+      .page { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 24px 0;
+        border-bottom: var(--line);
+      }
+
+      .brand { font: 500 13px "DM Mono", monospace; letter-spacing: .04em; text-decoration: none; }
+      .brand b { color: var(--red); }
+
+      nav { display: flex; gap: 20px; font: 500 13px "DM Mono", monospace; }
+      nav a { text-decoration: none; }
+
+      .hero {
+        min-height: 560px;
+        display: grid;
+        grid-template-columns: 1.35fr .65fr;
+        align-items: center;
+        gap: 50px;
+        border-bottom: var(--line);
+      }
+
+      .eyebrow, .label { font: 500 12px "DM Mono", monospace; letter-spacing: .08em; text-transform: uppercase; }
+      .eyebrow { margin: 0 0 16px; color: var(--red); }
+
+      h1, h2, p { margin-top: 0; }
+      h1 { max-width: 720px; margin-bottom: 24px; font-size: clamp(3.25rem, 8vw, 7.2rem); line-height: .86; letter-spacing: -.08em; }
+      h1 span { color: var(--red); }
+      .intro { max-width: 520px; margin-bottom: 30px; font-size: clamp(1.1rem, 2vw, 1.38rem); }
+
+      .button {
+        display: inline-block;
+        padding: 12px 17px;
+        border: var(--line);
+        background: var(--yellow);
+        box-shadow: var(--shadow);
+        font: 500 13px "DM Mono", monospace;
+        text-decoration: none;
+        transition: transform .15s, box-shadow .15s;
+      }
+      .button:hover { color: var(--ink); transform: translate(3px, 3px); box-shadow: 2px 2px 0 var(--ink); }
+
+      .stamp {
+        width: 230px;
+        aspect-ratio: 1;
+        display: grid;
+        place-items: center;
+        justify-self: end;
+        border: var(--line);
+        border-radius: 50%;
+        background: var(--green);
+        color: var(--paper);
+        box-shadow: var(--shadow);
+        transform: rotate(8deg);
+        text-align: center;
+        font: 500 15px "DM Mono", monospace;
+        line-height: 1.35;
+      }
+      .stamp strong { display: block; font: 700 55px "Space Grotesk", sans-serif; letter-spacing: -.08em; }
+
+      section { padding: 88px 0; border-bottom: var(--line); }
+      .section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: 36px; }
+      h2 { margin-bottom: 0; font-size: clamp(2.1rem, 4vw, 3.7rem); letter-spacing: -.07em; line-height: .95; }
+      .section-heading .label { color: var(--red); }
+
+      .work-list { border-top: var(--line); }
+      .project {
+        display: grid;
+        grid-template-columns: 90px 1fr auto;
+        gap: 24px;
+        align-items: center;
+        padding: 25px 0;
+        border-bottom: var(--line);
+        text-decoration: none;
+      }
+      .project:hover { color: var(--ink); background: #e9dfc9; }
+      .project-no { color: var(--red); font: 13px "DM Mono", monospace; }
+      .project h3 { margin: 0 0 4px; font-size: clamp(1.35rem, 2vw, 1.8rem); letter-spacing: -.05em; }
+      .project p { margin: 0; font-size: .96rem; }
+      .project-type { font: 12px "DM Mono", monospace; text-align: right; }
+
+      .about { display: grid; grid-template-columns: .7fr 1.3fr; gap: 10%; }
+      .about-copy { font-size: clamp(1.2rem, 2vw, 1.7rem); line-height: 1.25; }
+      .about-copy p:last-child { margin-bottom: 0; }
+      .facts { margin: 0; border-top: var(--line); }
+      .facts div { display: flex; justify-content: space-between; gap: 24px; padding: 13px 0; border-bottom: var(--line); }
+      .facts dt, .facts dd { margin: 0; }
+      .facts dt { font: 12px "DM Mono", monospace; text-transform: uppercase; }
+      .facts dd { text-align: right; }
+
+      .contact { padding: 88px 0 100px; }
+      .contact p { max-width: 600px; margin: 18px 0 28px; font-size: 1.2rem; }
+      .mail { font-size: clamp(1.4rem, 3.3vw, 3rem); font-weight: 600; letter-spacing: -.06em; }
+
+      footer { display: flex; justify-content: space-between; gap: 20px; padding: 22px 0; font: 12px "DM Mono", monospace; }
+
+      @media (max-width: 680px) {
+        .page { width: min(100% - 24px, 1120px); }
+        header { padding: 18px 0; }
+        nav { gap: 12px; font-size: 11px; }
+        .hero { min-height: auto; grid-template-columns: 1fr; gap: 28px; padding: 80px 0 62px; }
+        .stamp { width: 145px; justify-self: start; transform: rotate(-5deg); }
+        .stamp strong { font-size: 42px; }
+        section, .contact { padding: 62px 0; }
+        .project { grid-template-columns: 52px 1fr; gap: 14px; }
+        .project-type { grid-column: 2; text-align: left; }
+        .about { grid-template-columns: 1fr; gap: 34px; }
+        footer { flex-direction: column; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <a class="brand" href="#inicio">ROLL-D20<b>.</b> PORTFOLIO</a>
+        <nav aria-label="Navegación principal">
+          <a href="#proyectos">Proyectos</a>
+          <a href="#sobre-mi">Perfil</a>
+          <a href="#contacto">Contacto</a>
+        </nav>
+      </header>
+
+      <main id="inicio">
+        <section class="hero" aria-labelledby="titulo-principal">
+          <div>
+            <p class="eyebrow">Diseño &amp; desarrollo web · 2026</p>
+            <h1 id="titulo-principal">Hago sitios con <span>carácter.</span></h1>
+            <p class="intro">Somos Roll-d20, un estudio de diseño y desarrollo web. Construimos experiencias claras, rápidas y con una identidad que se recuerda.</p>
+            <a class="button" href="#proyectos">Ver proyectos seleccionados</a>
+          </div>
+          <aside class="stamp" aria-label="Disponible para colaborar">
+            DISPONIBLE
+            <strong>2026</strong>
+            PARA COLABORAR
+          </aside>
+        </section>
+
+        <section id="proyectos" aria-labelledby="titulo-proyectos">
+          <div class="section-heading">
+            <h2 id="titulo-proyectos">Trabajo reciente</h2>
+            <span class="label">01—03</span>
+          </div>
+          <div class="work-list">
+            <a class="project" href="#contacto">
+              <span class="project-no">01</span>
+              <div><h3>Archivo Local</h3><p>Identidad y plataforma editorial para una revista cultural.</p></div>
+              <span class="project-type">WEB / IDENTIDAD ↗</span>
+            </a>
+            <a class="project" href="#contacto">
+              <span class="project-no">02</span>
+              <div><h3>Ronda</h3><p>Tienda digital para objetos hechos en series pequeñas.</p></div>
+              <span class="project-type">E-COMMERCE ↗</span>
+            </a>
+            <a class="project" href="#contacto">
+              <span class="project-no">03</span>
+              <div><h3>Cartelera Norte</h3><p>Sistema de consulta cultural para una programación independiente.</p></div>
+              <span class="project-type">PRODUCTO DIGITAL ↗</span>
+            </a>
+          </div>
+        </section>
+
+        <section id="sobre-mi" class="about" aria-labelledby="titulo-perfil">
+          <div><p class="label">02 / Perfil</p><h2 id="titulo-perfil">Menos ruido.<br />Más intención.</h2></div>
+          <div>
+            <div class="about-copy">
+              <p>Me interesan los proyectos que cuidan tanto lo que dicen como la forma en que se usan. Trabajo entre la estrategia, el diseño visual y el código para que las ideas lleguen completas a la pantalla.</p>
+            </div>
+            <dl class="facts">
+              <div><dt>Base</dt><dd>Madrid, España</dd></div>
+              <div><dt>Especialidad</dt><dd>Diseño web · Front-end</dd></div>
+              <div><dt>Herramientas</dt><dd>Figma · HTML/CSS · JavaScript</dd></div>
+            </dl>
+          </div>
+        </section>
+
+        <section id="contacto" class="contact" aria-labelledby="titulo-contacto">
+          <p class="label">03 / Contacto</p>
+          <h2 id="titulo-contacto">¿Tienes algo entre manos?</h2>
+          <p>Cuéntame el proyecto, la idea o el problema. Respondo siempre que puedo.</p>
+          <a class="mail" href="mailto:hola@marc.dev">hola@marc.dev</a>
+        </section>
+      </main>
+
+      <footer>
+        <span>© 2026 Roll-d20</span>
+        <span>Hecho con cuidado desde Madrid</span>
+      </footer>
+    </div>
+  </body>
+</html>
