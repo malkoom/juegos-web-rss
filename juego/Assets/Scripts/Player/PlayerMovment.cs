@@ -10,7 +10,7 @@ public class PlayerMovment : MonoBehaviour
 
     [Header("Input")]
     [SerializeField]
-    private PlayerControls input;
+    private InputReader input;
     private Vector3 inputVector;
 
     [Header("Gravedad")]
@@ -21,11 +21,7 @@ public class PlayerMovment : MonoBehaviour
 
     void Awake()
     {
-        input = new PlayerControls();
         characterController = GetComponent<CharacterController>();
-
-        input.Player.Move.performed += ctx => inputVector = ctx.ReadValue<Vector2>();
-        input.Player.Move.canceled += ctx => inputVector = Vector2.zero;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -35,6 +31,11 @@ public class PlayerMovment : MonoBehaviour
     void Update()
     {
         Move();
+    }
+
+    void HandleInput(Vector2 input)
+    {
+        inputVector = input;
     }
 
     void Move()
@@ -48,11 +49,11 @@ public class PlayerMovment : MonoBehaviour
 
     void OnEnable()
     {
-        input.Player.Enable();
+        input.MoveEvent += HandleInput;
     }
 
     void OnDisable()
     {
-        input.Player.Disable();
+        input.MoveEvent -= HandleInput;
     }
 }
