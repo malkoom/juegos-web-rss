@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteract
   input: {fileID: 11400000, guid: cc7625a68fba57e20883654ef904866f, type: 2}
-  proximityTrigger: {fileID: 0}
+  proximityTrigger: {fileID: 59127832}
 --- !u!54 &59127835
 Rigidbody:
   m_ObjectHideFlags: 0
