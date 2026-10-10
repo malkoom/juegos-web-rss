@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Patterns.ServiceLocator;
 using Patterns.ServiceLocator.Interfaces;
 using Unity.VisualScripting;
@@ -7,6 +8,15 @@ using UnityEngine.InputSystem;
 
 public class DialogManager : MonoBehaviour, IService
 {
+    [Serializable]
+    private struct CharacterSpriteEntry
+    {
+        [Tooltip("Identificador del personaje tal y como aparece en los diálogos.")]
+        public string characterId;
+
+        public Sprite sprite;
+    }
+
     private Dialog currentDialog;
     private int currentLineIndex = 0;
     private bool inDialog = false;
@@ -15,11 +25,27 @@ public class DialogManager : MonoBehaviour, IService
 
     public DialogUIController uiController;
 
+    [SerializeField]
+    [Tooltip("Sprites asociados a cada identificador de personaje.")]
+    private List<CharacterSpriteEntry> characterSprites = new();
+
+    private readonly Dictionary<string, Sprite> charactersSpriteMap = new();
+
     public DialogDB dialogDB;
 
     public EventHandler<String> OnDialogEnd;
 
     public InputReader input;
+
+    private void Awake()
+    {
+        RebuildCharacterSpriteMap();
+    }
+
+    private void OnValidate()
+    {
+        RebuildCharacterSpriteMap();
+    }
 
     public void Initialize()
     {
@@ -36,6 +62,24 @@ public class DialogManager : MonoBehaviour, IService
             Debug.LogError(
                 "DialogManager: uiController no está asignado. Asigna el DialogUIController en el Inspector."
             );
+        }
+    }
+
+    public bool TryGetCharacterSprite(string characterId, out Sprite sprite)
+    {
+        return charactersSpriteMap.TryGetValue(characterId, out sprite);
+    }
+
+    private void RebuildCharacterSpriteMap()
+    {
+        charactersSpriteMap.Clear();
+
+        foreach (CharacterSpriteEntry entry in characterSprites)
+        {
+            if (string.IsNullOrWhiteSpace(entry.characterId) || entry.sprite == null)
+                continue;
+
+            charactersSpriteMap[entry.characterId] = entry.sprite;
         }
     }
 
