@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - Interactable
+  - BrightnessFilter
+  - SoundManager
   layers:
   - Default
   - TransparentFX
