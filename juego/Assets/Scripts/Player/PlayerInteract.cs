@@ -9,6 +9,9 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField]
     private SphereCollider proximityTrigger;
 
+    [SerializeField]
+    private LayerMask mask;
+
     private bool canInteract;
     private IInteractable interactableObject;
 
@@ -19,14 +22,22 @@ public class PlayerInteract : MonoBehaviour
             Debug.LogError("PlayerInteract: Proximity collider not set");
     }
 
-    bool Interact()
+    void Interact()
     {
         if (!canInteract)
-            return false;
-
+            return;
+        Debug.Log("Interacting");
         interactableObject.Interacted();
+    }
 
-        return true;
+    void OnEnable()
+    {
+        input.InteractEvent += Interact;
+    }
+
+    void OnDisable()
+    {
+        input.InteractEvent -= Interact;
     }
 
     void OnTriggerEnter(Collider other)
@@ -36,7 +47,7 @@ public class PlayerInteract : MonoBehaviour
             // Chaeck de que no se hagan colisiones atravesando paredes
             Vector3 interactableDir = other.transform.position - transform.position;
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, interactableDir, out hit, Mathf.Infinity))
+            if (Physics.Raycast(transform.position, interactableDir, out hit, Mathf.Infinity, mask))
             {
                 if (hit.transform.CompareTag("Interactable"))
                 {

@@ -19,6 +19,8 @@ public class DialogManager : MonoBehaviour, IService
 
     public EventHandler<String> OnDialogEnd;
 
+    public InputReader input;
+
     public void Initialize()
     {
         // Inicializar la base de datos de diálogos
@@ -53,9 +55,7 @@ public class DialogManager : MonoBehaviour, IService
 
     public void StartDialog(string dialogId)
     {
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = true;
-
+        input.DisableAllInput();
         // Validar que uiController esté asignado
 
         if (uiController == null)
@@ -131,12 +131,6 @@ public class DialogManager : MonoBehaviour, IService
 
     private void RestoreGameplayControl()
     {
-        Vector2 center = new Vector2(Screen.width / 2f, Screen.height / 2f);
-        Mouse.current.WarpCursorPosition(center);
-
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
         Invoke("UnlockPlayer", 0.5f);
     }
 
@@ -146,5 +140,8 @@ public class DialogManager : MonoBehaviour, IService
         return inDialog;
     }
 
-    private void UnlockPlayer() { }
+    private void UnlockPlayer()
+    {
+        input.EnableGameplayInput();
+    }
 }

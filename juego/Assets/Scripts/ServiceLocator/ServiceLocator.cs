@@ -23,7 +23,7 @@ namespace Patterns.ServiceLocator
             }
 
             // Registro de servicios
-            this.Register<DialogManager>();
+            this.Register<DialogManager>(GetComponent<DialogManager>());
         }
 
         void Start() { }
