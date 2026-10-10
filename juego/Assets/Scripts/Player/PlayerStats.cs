@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerStats : MonoBehaviour
 {
     [Header("Profile")]
+    private PlayerClassManager playerClassManager;
+
     [SerializeField] private Profile characterClass;
 
     public PlayerData data;
@@ -11,6 +14,8 @@ public class PlayerStats : MonoBehaviour
 
     private void Awake()
     {
+        playerClassManager = FindFirstObjectByType<PlayerClassManager>();
+        characterClass = playerClassManager.characterClass;
         CacheReferences();
     }
 
